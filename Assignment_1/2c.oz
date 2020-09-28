@@ -3,7 +3,7 @@ declare fun {FoldL List BinOp Identity}
 	      fun {FoldLAux List BinOp Identity}
 		 case List
 		 of nil then Identity
-		 [] H|T then {FoldLAux T BinOp {BinOp H Identity}}
+		 [] H|T then {FoldLAux T BinOp {BinOp Identity H}}
 		 end
 	      end
 	      {FoldLAux List BinOp Identity}
