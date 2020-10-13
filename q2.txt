@@ -1,0 +1,12 @@
+declare fun {Curry Function}
+    local CurryAux in 
+        fun {CurryAux Function}
+            fun ($ X)
+                fun ($ Y)
+                    {F X Y}
+                end
+            end
+        end
+        {CurryAux Function}
+    end
+end

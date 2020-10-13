@@ -1,0 +1,86 @@
+declare fun {Kth L N}
+    local KthAux in
+        fun {KthAux L N I}
+            if I==N then L.1
+            else {KthAux L.2 N I+1}
+            end
+        end
+        {KthAux L N 1}
+    end
+end
+
+% {Browse {Kth [1 2 3 4 5] 3}}
+
+declare
+fun {Merge L M}
+   local MergeAux in
+      fun {MergeAux L M Partial}
+	 case L of nil
+	 then
+	    case M of nil then Partial
+	    []H|T then H|{MergeAux L T Partial}
+	    end
+	 []J|K then
+	    case M of nil then J|{MergeAux K M Partial}
+	    [] H|T then
+            H|{MergeAux L T Partial}
+	    end
+	 end
+      end
+      {MergeAux L M nil}
+   end
+end
+
+declare fun {Concat L M}
+   case L
+   of nil
+   then M
+   [] H|T then H|{Concat T M}
+   end
+end
+
+
+declare fun {Preface E L}
+   case L
+   of nil
+   then nil
+   [] H|T then {Merge E H}|{Preface E T}
+   end
+end
+
+declare fun {CrossProduct L M}
+   case L
+   of nil
+   then nil
+   [] H|T then {Concat {Preface H M} {CrossProduct T M }}
+   end
+end
+
+
+% {Browse {CrossProduct [[1 2] [2 3]] [[1 2] [3 3]]}}
+
+declare fun {Partition N L}
+    local PartitionAux in 
+        fun {PartitionAux N L I J}
+            if I>=J then nil
+            else {CrossProduct {Kth L I}{Kth L J}}|{PartitionAux N L I+1 J-1}
+            end
+        end
+        [N]|{PartitionAux N L 1 N-1}
+    end
+end
+
+%to calculate partiton
+declare fun {Main N}
+    local MainAux in 
+        fun {MainAux N L I}
+            if I==N then L
+            else {MainAux N {Partition I L}|L I+1}
+            end
+        end
+        {Kth {MainAux N [ [[1]] [[2][1 1]] ] 2} N}
+    end
+end
+
+
+

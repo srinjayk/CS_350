@@ -1,0 +1,83 @@
+declare
+fun {ListLength L}
+   case L
+   of nil
+   then 0
+   else 1+{ListLength L.2}
+   end
+end
+
+% take function 
+declare fun {Take L N}
+	   local TakeAux in
+	      fun {TakeAux L N Partial}
+		 case L of nil
+		 then nil
+		 else
+		    if N =< 0
+		    then nil
+		    else
+		       case L of nil then Partial
+		       [] H|T then H|{TakeAux T N-1 Partial}
+		       end
+		    end
+		 end
+	      end
+	      {TakeAux L N nil}
+	   end
+	end
+
+% match patttern 
+declare fun {Count O M}
+    local CountAux in
+        fun {CountAux O M}
+            case M of nil then M|[O|1]
+            []H|T then 
+                if O == H.1 then [H.1|H.2+1]|T
+                else H|{CountAux O T}
+                end
+            end
+        end
+        {CountAux O M}
+    end
+end
+
+
+
+% declare fun {Tri L}
+%     local TriAux in
+%         fun {TriAux L N I M}
+%             if I==N-2 then M
+%             else {TriAux L.2 N I+1 {Count {Take L 3} M}}
+%             end
+%         end
+%         {TriAux L {ListLength L} 1 nil}
+%     end
+% end
+
+% group three elemetns
+declare fun {Group L}
+    local GroupAux in
+        fun {GroupAux L N I M}
+            if I==N-1 then nil
+            else {Take L 3}|{GroupAux L.2 N I+1 M}
+            end
+        end
+        {GroupAux L {ListLength L} 1 nil}
+    end
+end
+
+
+
+declare fun {Cnt L}
+    local CntAux in
+        fun {CntAux L M}
+            case L of nil then M
+            []H|T then {CntAux T {Count H M}}
+            end
+        end
+        {CntAux L nil}
+    end
+end
+{Browse {Cnt {Group [m i s s i s s i p p i]}}}
+{Browse {Group [m i s s i s s i p p i]}}
