@@ -3,7 +3,7 @@ declare fun {Curry Function}
         fun {CurryAux Function}
             fun ($ X)
                 fun ($ Y)
-                    {F X Y}
+                    {Function X Y}
                 end
             end
         end
