@@ -45,17 +45,6 @@ uniq a = cusunique [] a
 
 
 -- Q3
-neighbors1 :: (Ord a1, Ord a2, Num a1, Num a2) => a1 -> a2 -> [(a1, a2)]
-neighbors1 x y
-     | x==0 && y==0 = [(0,1),(1,0),(1,1)]
-     | x==9 && y==9 = [(8,8),(8,9),(9,8)]
-     | x==0 && y==9 = [(0,8),(1,8),(1,9)]
-     | x==9 && y==0 = [(8,0),(8,1),(9,1)]
-     | x==0 = [(x,y-1),(x,y+1),(x+1,y-1),(x+1,y),(x+1,y+1)]
-     | y==0 = [(x-1,y),(x-1,y+1),(x,y+1),(x+1,y),(x+1,y+1)]
-     | x==9 = [(x-1,y-1),(x-1,y),(x-1,y+1),(x,y-1),(x,y+1)]
-     | y==9 = [(x-1,y-1),(x-1,y),(x,y-1),(x+1,y-1),(x+1,y)]
-     | otherwise = [(x-1,y-1),(x-1,y),(x-1,y+1),(x,y-1),(x,y+1),(x+1,y-1),(x+1,y),(x+1,y+1)]
 
 getneighbors x y = [(x-1,y-1),(x-1,y),(x-1,y+1),(x,y-1),(x,y+1),(x+1,y-1),(x+1,y),(x+1,y+1)]
 neighbors :: (Ord a1, Ord a2, Num a1, Num a2) => a1 -> a2 -> [(a1, a2)]
@@ -73,25 +62,6 @@ mapto1 [] = []
 mapto1 (x:xs) = [1] ++ mapto1(xs)
 
 countwords l = foldr (+) 0 (mapto1 (words l))
-
-rembackn [] = []
-rembackn (x:xs) 
-    | x=='\n' = ' ':(rembackn xs)
-    | otherwise = x:(rembackn xs)
-
-rempunc [] = []
-rempunc (x:xs)
-    | x=='.' || x==',' || x==';' || x=='?' = ' ':(rempunc xs)
-    | otherwise = x:(rempunc xs)
-
-countwordsutil [] a
-    | a==1 = 1
-    | otherwise = 0
-countwordsutil (x:xs) a
-    | x/=' ' = countwordsutil xs 1
-    | otherwise = a + (countwordsutil xs 0)
-countwords1 l = countwordsutil l 0
-
 
 
 
