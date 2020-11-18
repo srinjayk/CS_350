@@ -88,7 +88,6 @@ tree1 = Node 1 (Node 2 (Node 3 Empty Empty)
  
  -- b
 getsum Empty = 0
--- getsum (leaf a) = a
 getsum (Node a l r) = a + (getsum l) + (getsum r)
 
 maptree f Empty = Empty
@@ -109,7 +108,6 @@ foldtreeold f id Empty = id
 foldtreeold f id (Node a l r) = foldtreeold f (f id (foldtreeold f a l)) r
 
 foldtree f id Empty = id
--- foldtreenew f id (Node a l r) = foldtreenew f (f id (foldtreenew f a l)) r
 foldtree f id (Node a l r) = (f a (foldtree f id l) (foldtree f id r))
 
 cusmult a b c = a*b*c
