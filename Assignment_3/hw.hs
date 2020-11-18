@@ -46,7 +46,10 @@ uniq a = cusunique [] a
 
 -- Q3
 
-getneighbors x y = [(x-1,y-1),(x-1,y),(x-1,y+1),(x,y-1),(x,y+1),(x+1,y-1),(x+1,y),(x+1,y+1)]
+getneighbors x y 
+        | x>=0 && x<=9 && y>=0 && y<=9 = [(x-1,y-1),(x-1,y),(x-1,y+1),(x,y-1),(x,y+1),(x+1,y-1),(x+1,y),(x+1,y+1)]
+        | otherwise = []
+
 neighbors :: (Ord a1, Ord a2, Num a1, Num a2) => a1 -> a2 -> [(a1, a2)]
 neighbors x y = [(a,b) | (a,b)<-(getneighbors x y), a>=0 , a<=9, b>=0, b<=9]
 
@@ -78,37 +81,37 @@ compose_multiple (x:xs) a = x (compose_multiple xs a)
 
 -- Q6 
 -- a
-data BinaryTree a = Empty | Node a (BinaryTree a) (BinaryTree a) deriving Show
+data BinaryTree a = Nil | Node a (BinaryTree a) (BinaryTree a) deriving Show
 
-tree1 = Node 1 (Node 2 (Node 3 Empty Empty)
-                                (Node 4 Empty Empty))
-                    (Node 5 Empty
-                                (Node 6 (Node 7 Empty Empty)
-                                            Empty))
+tree1 = Node 1 (Node 2 (Node 3 Nil Nil)
+                                (Node 4 Nil Nil))
+                    (Node 5 Nil
+                                (Node 6 (Node 7 Nil Nil)
+                                            Nil))
  
  -- b
-getsum Empty = 0
+getsum Nil = 0
 getsum (Node a l r) = a + (getsum l) + (getsum r)
 
-maptree f Empty = Empty
+maptree f Nil = Nil
 maptree f (Node a l r) = Node (f a) (maptree f l) (maptree f r)
 
-levelorder Empty = []
+levelorder Nil = []
 levelorder (Node a l r) = (levelorder l) ++ [a] ++ (levelorder r)
 
-preorder Empty = []
+preorder Nil = []
 preorder (Node a l r) = [a] ++ (preorder l) ++ (preorder r)
 
-postorder Empty = []
+postorder Nil = []
 postorder (Node a l r) = (postorder l) ++ (postorder r) ++ [a]
 
 -- c
 
-foldtreeold f id Empty = id
-foldtreeold f id (Node a l r) = foldtreeold f (f id (foldtreeold f a l)) r
+foldTreeold f id Nil = id
+foldTreeold f id (Node a l r) = foldTreeold f (f id (foldTreeold f a l)) r
 
-foldtree f id Empty = id
-foldtree f id (Node a l r) = (f a (foldtree f id l) (foldtree f id r))
+foldTree f id Nil = id
+foldTree f id (Node a l r) = (f a (foldTree f id l) (foldTree f id r))
 
 cusmult a b c = a*b*c
 cusadd a b c = a+b+c
