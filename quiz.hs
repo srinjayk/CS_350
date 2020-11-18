@@ -1,15 +1,3 @@
-We need to show that 
-	fmap id = id
-	fmap f.g = fmap f. fmap g
-
-Here we have 
-
-mapmaybe _ Nothing = Nothing
-mapmaybe f (Just x) = Just (f x)
-
-fmap id = fmap id can be shown using 
-mapmaybe _ Nothing = Nothing 
-
 checkocc _ [] = False
 checkocc a (x:xs)
      | a==x = True
