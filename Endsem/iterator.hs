@@ -10,7 +10,7 @@ begin :: State GameState ()
 begin = state $ (\(l,i) -> ((),(l,0)))
 
 peek :: State GameState [Char]
-peek = state $ (\(l,i) -> (([(l !! 0)]),(l,i)))
+peek = state $ (\(l,i) -> (([(l !! i)]),(l,i)))
 
 next :: State GameState [Char]
 next = do
@@ -40,6 +40,7 @@ main = do
                next
                next
                next
+               peek
                -- isOver
                -- next
                -- isOver
